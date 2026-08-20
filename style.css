@@ -1,0 +1,578 @@
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f8eeee;
+  --card: rgba(255, 255, 255, 0.78);
+  --text: #282326;
+  --muted: #8c7d82;
+  --accent: #d98e9f;
+  --border: rgba(80, 45, 55, 0.08);
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    Inter,
+    Arial,
+    sans-serif;
+
+  color: var(--text);
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 255, 255, 0.95),
+      transparent 42%
+    ),
+    var(--bg);
+}
+
+
+/* ========================================
+   PAGE
+======================================== */
+
+.page {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 64px 16px;
+
+  overflow: hidden;
+}
+
+
+/* ========================================
+   ФОТО
+======================================== */
+
+.background-photo-wrapper {
+  position: absolute;
+
+  z-index: 0;
+
+  width: min(390px, 48vw);
+
+  aspect-ratio: 1 / 1.28;
+
+  top: 28px;
+  right: max(4vw, 30px);
+
+  transform: rotate(6deg);
+
+  pointer-events: none;
+
+  /*
+    Тень всей фотографии
+  */
+  filter:
+    drop-shadow(
+      0 25px 45px rgba(65, 35, 42, 0.18)
+    );
+}
+
+
+/* ========================================
+   САМО ФОТО
+======================================== */
+
+.background-photo {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  border: 10px solid rgba(255, 255, 255, 0.96);
+
+  /*
+    Небольшая неровность краёв
+  */
+  clip-path: polygon(
+    1% 1%,
+    98% 0%,
+    150% 3%,
+    99% 97%,
+    96% 100%,
+    3% 99%,
+    0% 96%,
+    1% 4%
+  );
+
+  opacity: 0.80;
+
+  filter:
+    saturate(0.98)
+    brightness(1.05);
+
+  /*
+    Очень небольшое увеличение,
+    чтобы края не выглядели слишком ровными
+  */
+  transform: scale(1.01);
+}
+
+
+/* ========================================
+   СКЛАДКИ
+======================================== */
+
+/*
+   ВАЖНО:
+
+   Здесь мы не рисуем тонкие линии.
+
+   Каждая складка состоит из:
+   - широкой тёмной зоны
+   - светлой зоны
+   - мягкого перехода
+
+   Поэтому получается объём бумаги.
+*/
+
+
+.background-photo-wrapper::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 5;
+
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+
+  pointer-events: none;
+
+  /*
+    СКЛАДКА №1
+    Диагональная
+  */
+
+  background:
+
+    linear-gradient(
+      125deg,
+
+      transparent 0%,
+
+      transparent 34%,
+
+      rgba(255, 255, 255, 0.00) 38%,
+
+      rgba(255, 255, 255, 0.24) 42%,
+
+      rgba(255, 255, 255, 0.32) 44%,
+
+      rgba(75, 35, 45, 0.14) 47%,
+
+      rgba(75, 35, 45, 0.08) 49%,
+
+      rgba(255, 255, 255, 0.00) 53%,
+
+      transparent 180%,
+
+      transparent 10%
+    ),
+
+    /*
+      СКЛАДКА №2
+      Вертикальная
+    */
+
+    linear-gradient(
+      78deg,
+
+      transparent 1%,
+
+      transparent 45%,
+
+      rgba(255, 255, 255, 0.00) 47%,
+
+      rgba(255, 255, 255, 0.18) 49%,
+
+      rgba(255, 255, 255, 0.26) 51%,
+
+      rgba(70, 30, 40, 0.10) 54%,
+
+      rgba(70, 30, 40, 0.06) 56%,
+
+      rgba(255, 255, 255, 0.00) 59%,
+
+      transparent 64%,
+
+      transparent 100%
+    );
+
+  /*
+    НЕ soft-light.
+
+    Normal делает складки действительно
+    видимыми.
+  */
+
+  mix-blend-mode: normal;
+
+  opacity: 0.15;
+
+  /*
+    Та же форма, что и у фото
+  */
+
+  clip-path: polygon(
+    1% 1%,
+    98% 0%,
+    100% 3%,
+    99% 97%,
+    96% 100%,
+    3% 99%,
+    0% 96%,
+    1% 4%
+  );
+}
+
+
+/* ========================================
+   МЯГКИЕ ЗАЛОМЫ
+======================================== */
+
+.background-photo-wrapper::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 6;
+
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+
+  pointer-events: none;
+
+  background:
+
+    /*
+      Большое светлое пятно
+      возле складки
+    */
+
+    radial-gradient(
+      ellipse at 35% 35%,
+      rgba(255, 255, 255, 0.20),
+      transparent 28%
+    ),
+
+    /*
+      Лёгкое затемнение
+    */
+
+    radial-gradient(
+      ellipse at 72% 68%,
+      rgba(60, 30, 40, 0.10),
+      transparent 32%
+    ),
+
+    /*
+      Ещё один небольшой залом
+    */
+
+    linear-gradient(
+      160deg,
+      transparent 0%,
+      transparent 63%,
+      rgba(255, 255, 255, 0.12) 67%,
+      rgba(70, 35, 45, 0.07) 70%,
+      transparent 74%,
+      transparent 100%
+    );
+
+  opacity: 0.65;
+
+  mix-blend-mode: normal;
+
+  clip-path: polygon(
+    1% 1%,
+    98% 0%,
+    100% 3%,
+    99% 97%,
+    96% 100%,
+    3% 99%,
+    0% 96%,
+    1% 4%
+  );
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+
+.card {
+  position: relative;
+
+  z-index: 10;
+
+  width: min(680px, 100%);
+
+  padding: 46px 34px 30px;
+
+  text-align: center;
+
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  border-radius: 30px;
+
+  box-shadow:
+    0 20px 70px rgba(75, 40, 50, 0.08);
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* ========================================
+   TEXT
+======================================== */
+
+.eyebrow {
+  margin-bottom: 24px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.22em;
+
+  color: var(--accent);
+}
+
+
+.cake {
+  font-size: 46px;
+
+  margin-bottom: 18px;
+}
+
+
+h1 {
+  margin: 0;
+
+  font-size: clamp(34px, 7vw, 58px);
+
+  line-height: 1.03;
+
+  letter-spacing: -0.045em;
+
+  font-weight: 700;
+}
+
+
+.intro {
+  margin: 22px 0 30px;
+
+  color: var(--muted);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+
+/* ========================================
+   VIDEO
+======================================== */
+
+.video-section {
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  background: #f1e7e9;
+}
+
+
+.video-section video {
+  display: none;
+
+  width: 100%;
+
+  max-height: 70vh;
+
+  background: #111;
+}
+
+
+.video-section.active video {
+  display: block;
+}
+
+
+.video-section.active .placeholder {
+  display: none;
+}
+
+
+/* ========================================
+   PLACEHOLDER
+======================================== */
+
+.placeholder {
+  min-height: 310px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 35px 20px;
+}
+
+
+.play-icon {
+  width: 62px;
+  height: 62px;
+
+  display: grid;
+
+  place-items: center;
+
+  margin-bottom: 22px;
+
+  padding-left: 4px;
+
+  border-radius: 50%;
+
+  color: white;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 12px 30px rgba(180, 100, 120, 0.2);
+}
+
+
+.placeholder h2 {
+  margin: 0 0 8px;
+
+  font-size: 21px;
+
+  letter-spacing: -0.02em;
+}
+
+
+.placeholder p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 14px;
+}
+
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer {
+  margin: 28px 0 0;
+
+  color: #ad969d;
+
+  font-size: 12px;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 520px) {
+
+  .background-photo-wrapper {
+    width: 245px;
+
+    top: 12px;
+
+    right: -55px;
+
+    transform: rotate(7deg);
+
+    filter:
+      drop-shadow(
+        0 18px 30px rgba(65, 35, 42, 0.14)
+      );
+  }
+
+
+  .background-photo {
+    border-width: 7px;
+
+    opacity: 0.40;
+  }
+
+
+  .background-photo-wrapper::before {
+    opacity: 0.70;
+  }
+
+
+  .background-photo-wrapper::after {
+    opacity: 0.60;
+  }
+
+
+  .page {
+    padding: 12px;
+
+    align-items: flex-start;
+
+    padding-top: 24px;
+  }
+
+
+  .card {
+    padding: 38px 18px 25px;
+
+    border-radius: 25px;
+  }
+
+
+  .intro {
+    font-size: 14px;
+  }
+
+
+  .placeholder {
+    min-height: 270px;
+  }
+}
