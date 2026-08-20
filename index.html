@@ -5,18 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Небольшой сюрприз">
   <title>Для тебя ❤️</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
   <main class="page">
+
     <div class="background-photo-wrapper">
-  <img 
-      class="background-photo" 
-      src="cake-photo.jpg" 
-      alt="Торт"
-  >
-</div>
+      <img
+        class="background-photo"
+        src="cake-photo.jpg"
+        alt="Торт"
+      >
+    </div>
+
     <div class="card">
+
       <div class="eyebrow">НЕБОЛЬШОЙ СЮРПРИЗ</div>
 
       <div class="cake">🎂</div>
@@ -24,37 +30,27 @@
       <h1>Я приготовил<br>это для тебя.</h1>
 
       <p class="intro">
-       Это доказательство, что я делал его сам 😂 .
+        Это доказательство, что я делал его сам 😂.
       </p>
 
-      <!--
-        ДО ЗАГРУЗКИ ВИДЕО:
-        этот блок показывает красивую заглушку.
 
-        ПОСЛЕ ЗАГРУЗКИ:
-        положи видео с названием "video.mp4" рядом с index.html
-        и добавь class="active" к video-section.
-      -->
-      <section class="video-section" id="videoSection">
-        <div class="placeholder" id="placeholder">
-          <div class="play-icon">▶</div>
-          <h2>Видео скоро появится</h2>
-          <p>Я ещё готовлю его для тебя ❤️</p>
-        </div>
+      <!-- ВИДЕО С YOUTUBE -->
 
-       <video id="video" controls playsinline preload="metadata">
-  <source
-    src="https://github.com/Sarkatbel/Tort/releases/download/video/video.mp4"
-    type="video/mp4"
-  >
-  Ваш браузер не поддерживает видео.
-</video>
+      <section class="video-section">
+        <iframe
+          src="https://www.youtube.com/embed/RclESiwDELw?rel=0&modestbranding=1"
+          title="Видео для тебя ❤️"
+          allow="accelerometer; autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen>
+        </iframe>
       </section>
 
+
       <p class="footer">Сделано с любовью ❤️</p>
+
     </div>
+
   </main>
 
-  <script src="script.js"></script>
 </body>
 </html>
